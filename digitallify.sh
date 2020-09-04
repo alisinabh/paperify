@@ -14,12 +14,12 @@ do
 
   noext=${f%.*}
   chunk=$(echo $noext |rev | cut -f 1 -d '-' | rev)
-  zbarimg --raw --quiet --oneshot $f > "$chunk-$noext.chunk"
+
+  zbarimg --raw -Sbinary --quiet --oneshot $f | head -c 2953 > "$chunk-$noext.chunk"
 done
 
 cd $cur
-ls $dir/*.chunk | sort | xargs cat | base64 -d | xz -dc > $outputfile
-echo "$(ls $dir/*.chunk | sort)"
+ls $dir/*.chunk | sort | xargs cat > $outputfile
 rm $dir/*.chunk
 
 echo "File reconstructed as $outputfile please check the bellow sha1 with the sha1 of the file in your media."
