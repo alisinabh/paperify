@@ -1,2 +1,5 @@
 *.tar
 *.tgz
+*.png
+*.chunk
+tmp

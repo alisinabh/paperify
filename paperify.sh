@@ -40,3 +40,7 @@ do
 
   rm $f
 done
+
+echo ""
+echo "QR Code generation completed"
+echo "You can now print files inside of $dir"

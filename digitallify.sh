@@ -22,5 +22,8 @@ cd $cur
 ls $dir/*.chunk | sort | xargs cat > $outputfile
 rm $dir/*.chunk
 
-echo "File reconstructed as $outputfile please check the bellow sha1 with the sha1 of the file in your media."
+echo ""
+echo "File reconstructed as $outputfile"
+echo "IMPORTANT: Please check the bellow sha1 with the sha1 of the file in your media."
+echo ""
 sha1sum $outputfile
