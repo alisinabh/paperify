@@ -16,7 +16,7 @@ mkdir -p $dir
 rm -f $dir/*
 
 sha=$(sha1sum $file | cut -f 1 -d ' ')
-date=$(date -u --iso-8601=seconds)
+date=$(date -u +%Y-%m-%dT%H:%M:%S+00:00)
 
 cat $file | split -d -b 2953 -a3 - "$dir/$prefix"
 
