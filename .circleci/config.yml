@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: |
           apt-get update -qq
-          apt-get install -yq zbar-tools qrencode
+          apt-get install -yq zbar-tools qrencode imagemagick
       - checkout
       - run: echo "Running encode and decode tests for paperify"
       - run: |
