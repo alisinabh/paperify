@@ -8,7 +8,7 @@ jobs:
     steps:
       - run: |
           apt-get update -qq
-          apt-get install -y zbar-tools qrencode
+          apt-get install -yq zbar-tools qrencode
       - checkout
       - run: echo "Running encode and decode tests for paperify"
       - run: |
