@@ -1,5 +1,7 @@
 # Paperify
 
+[![CircleCI](https://circleci.com/gh/alisinabh/paperify.svg?style=svg)](https://circleci.com/gh/alisinabh/paperify)
+
 Use QR codes to backup your data on papers.
 
 ## Sample
