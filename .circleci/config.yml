@@ -6,9 +6,9 @@ jobs:
     environment:
       DEBIAN_FRONTEND: noninteractive
     docker:
-      - image: alpine:3
+      - image: archlinux
     steps:
-      - run: apk -v --update add zbar libqrencode imagemagick
+      - run: pacman -Sy qrencode zbar imagemagick
       - checkout
       - run: echo "Running encode and decode tests for paperify"
       - run: |
