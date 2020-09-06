@@ -16,13 +16,14 @@ mkdir -p $dir
 rm -f $dir/*
 
 sha=$(sha1sum $file | cut -f 1 -d ' ')
-date=$(date -u --iso-8601=seconds)
+date=$(date -u +%Y-%m-%dT%H:%M:%S+00:00)
 
 cat $file | split -d -b 2953 -a3 - "$dir/$prefix"
 
 cd $dir
 
 count=$(ls | wc -l)
+FONT=${FONT:-fixed}
 
 for f in $prefix*
 do
@@ -32,7 +33,7 @@ do
   out="$f.png"
   cat $f | qrencode --8bit -v 40 --size=13 --margin=1 --output "$out"
   convert -size 2490x3510 xc:white \( $out -gravity center \) -composite \
-    -pointsize 72 -gravity northwest -annotate +100+200 "FILE: $filename\n\nCHUNK: $f\n\nTOTAL CHUNKS: $count" \
+    -font $FONT -pointsize 72 -gravity northwest -annotate +100+200 "FILE: $filename\n\nCHUNK: $f\n\nTOTAL CHUNKS: $count" \
     -gravity southwest -pointsize 41 -annotate +100+300 "CHUNK ${f##*-} SHA1: $chunksha\n\nFINAL SHA1: $sha" \
     -gravity northeast -pointsize 41 -annotate +100+130 "$date" \
     -gravity southeast -pointsize 41 -annotate +100+150 "$comment" \

@@ -1,0 +1,28 @@
+version: 2.1
+
+# Define the jobs we want to run for this project
+jobs:
+  test:
+    environment:
+      FONT: Roboto-Regular
+    docker:
+      - image: archlinux
+    steps:
+      - run: pacman --noconfirm -Sy qrencode zbar imagemagick git ttf-roboto fontconfig diffutils
+      - checkout
+      - run: echo "Running encode and decode tests for paperify"
+      - run: |
+          echo "Generating testfine.bin"
+          dd if=/dev/urandom of=testfile.bin bs=1 count=10240
+          echo "Test file generated! running paperify.sh"
+      - run: fc-cache --force
+      - run: ./paperify.sh testfile.bin
+      - run: ./digitallify.sh testfile.regen.bin testfile.bin-qr
+      - run: diff testfile.bin testfile.regen.bin
+      - run: echo "Tests were successful. diff exit code $?"
+
+# Orchestrate our job run sequence
+workflows:
+  test:
+    jobs:
+      - test
