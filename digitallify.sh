@@ -1,7 +1,18 @@
 #!/bin/sh -e
 
-outputfile="$1"
-dir="$2"
+if [ "$1" = "-h" ]; then
+  echo "usage: digitallify.sh <outputfile> <images_directory>"
+  exit 0
+elif [ "$1" = "" ]; then
+  echo "Please provide a filename as the first argument"
+  exit 1
+elif [ "$2" = "" ]; then
+  echo "Please provide the directory of the images as the second argument"
+  exit 1
+fi
+
+outputfile="$INPUT_DIR$1"
+dir="$OUTPUT_DIR$2"
 
 files=$(ls $dir)
 
