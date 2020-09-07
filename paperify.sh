@@ -6,6 +6,14 @@ do
   if [ ${!i} = "-c" ]
   then ((i++))
     comment=${!i};
+  elif [ ${!i} = "-h" ]
+  then ((i++))
+    echo "usage: paperify.sh [OPTIONS] <FILE>"
+    echo ""
+    echo "options:"
+    echo -e "  -h\t\tShow this help."
+    echo -e "  -c COMMENT\tAdd comment to the generated files."
+    exit 0
   else
     file="$INPUT_DIR${!i}";
   fi

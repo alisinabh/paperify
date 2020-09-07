@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
-if [ "$1" = "" ]; then
+if [ "$1" = "-h" ]; then
+  echo "usage: digitallify.sh <outputfile> <images_directory>"
+  exit 0
+elif [ "$1" = "" ]; then
   echo "Please provide a filename as the first argument"
   exit 1
 elif [ "$2" = "" ]; then
