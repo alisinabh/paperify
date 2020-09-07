@@ -1,16 +1,27 @@
 #!/bin/sh -e
 
-while getopts "c:" opt; do
-    case $opt in
-    c) comment=$OPTARG ;; # Handle -c
-    \?) echo "Use -c \"COMMENT\" to add comment to images."; exit ;; # Handle error: unknown option or missing required argument.
-    esac
+for ((i=1;i<=$#;i++));
+do
+
+  if [ ${!i} = "-c" ]
+  then ((i++))
+    comment=${!i};
+  else
+    file="$INPUT_DIR${!i}";
+  fi
+
 done
 
-for file in $@; do :; done
+if test -f "$file"; then
+  echo "Paperifying $file"
+else
+  echo "File not found! $file"
+  exit 1
+fi
+
 filename=$(echo $file | rev | cut -f 1 -d '/' | rev)
 prefix="$filename-"
-dir="$filename-qr"
+dir="$OUTPUT_DIR$filename-qr"
 
 mkdir -p $dir
 rm -f $dir/*
