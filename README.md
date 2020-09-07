@@ -38,6 +38,8 @@ wget https://github.com/alisinabh/paperify/archive/master.zip -O paperify.zip &&
      unzip paperify.zip && cd paperify-master
 ```
 
+Or you can use paperify's Docker image at alisinabh/paperify. More details below.
+
 ## Usage
 ```
 # Creates FILE-qr directory with generated qr codes inside.
@@ -48,6 +50,22 @@ wget https://github.com/alisinabh/paperify/archive/master.zip -O paperify.zip &&
 # Reads all files inside the DIRECTORY which you have all your
 # scanned pages inside. Make sure the file namings are correct 
 ./digitalify.sh OUTPUT_FILE DIRECTORY
+```
+
+### Use with Docker
+
+You can mount your files at `/target` in paperify's docker container. Then run paperify.
+
+For simplicity, You can just copy the bellow commands which will mount your current directory automatically.
+
+```
+# To Paperify
+# FIRST: cd into the folder that your file is in
+docker run -v$(pwd):/target alisinabh/paperify FILE
+
+# To Digitallify
+# First cd into the folder that your scanned images are in
+docker run -v$(pwd):/target --entrypoint=/paperify/digitallify.sh alisinabh/paperify OUTPUT_FILE .
 ```
 
 ## Recommendations
