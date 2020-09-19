@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 if [ "$1" = "-h" ]; then
   echo "usage: digitallify.sh <outputfile> <images_directory>"

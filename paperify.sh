@@ -1,6 +1,6 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
-for ((i=1;i<=$#;i++));
+for (( i=1; i<=$#; i++ ))
 do
 
   if [ ${!i} = "-c" ]
