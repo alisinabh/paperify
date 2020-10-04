@@ -2,11 +2,11 @@
 
 for (( i=1; i<=$#; i++ ))
 do
-
-  if [ ${!i} = "-c" ]
+  echo "${!i} $#"
+  if [ "${!i}" = "-c" ]
   then ((i++))
     comment=${!i};
-  elif [ ${!i} = "-h" ]
+  elif [ "${!i}" = "-h" ]
   then ((i++))
     echo "usage: paperify.sh [OPTIONS] <FILE>"
     echo ""
@@ -31,26 +31,27 @@ filename=$(echo $file | rev | cut -f 1 -d '/' | rev)
 prefix="$filename-"
 dir="$OUTPUT_DIR$filename-qr"
 
-mkdir -p $dir
-rm -f $dir/*
+rm -Rf -- "$dir"
+mkdir -p "$dir"
+echo $(pwd)
 
-sha=$(sha1sum $file | cut -f 1 -d ' ')
+sha=$(sha1sum "$file" | cut -f 1 -d ' ')
 date=$(date -u +%Y-%m-%dT%H:%M:%S+00:00)
 
-cat $file | split -d -b 2953 -a3 - "$dir/$prefix"
+cat "$file" | split -d -b 2953 -a3 - "$dir/$prefix"
 
-cd $dir
+cd "$dir"
 
 count=$(ls | wc -l)
 FONT=${FONT:-fixed}
 
-for f in $prefix*
+for f in *
 do
   echo "processing $f"
-  chunksha=$(sha1sum $f | cut -f 1 -d ' ')
+  chunksha=$(sha1sum "$f" | cut -f 1 -d ' ')
 
-  out="$f.png"
-  cat $f | qrencode --8bit -v 40 --size=13 --margin=1 --output "$out"
+  out="${f/\ /_}.png"
+  cat "$f" | qrencode --8bit -v 40 --size=13 --margin=1 --output "$out"
   convert -size 2490x3510 xc:white \( $out -gravity center \) -composite \
     -font $FONT -pointsize 72 -gravity northwest -annotate +100+200 "FILE: $filename\n\nCHUNK: $f\n\nTOTAL CHUNKS: $count" \
     -gravity southwest -pointsize 41 -annotate +100+300 "CHUNK ${f##*-} SHA1: $chunksha\n\nFINAL SHA1: $sha" \
@@ -58,7 +59,7 @@ do
     -gravity southeast -pointsize 41 -annotate +100+150 "$comment" \
     -gravity southwest -pointsize 41 -annotate +100+150 "gitlab.com/alisinabh/paperify" $out
 
-  rm $f
+  rm "$f"
 done
 
 echo ""
