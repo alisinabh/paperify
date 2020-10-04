@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/alisinabh/paperify.svg?style=svg)](https://circleci.com/gh/alisinabh/paperify)
 
-Use QR codes to backup your data on papers. Simply backup you files, print them and store them in a safe place.
+Use QR codes to backup your data on papers. Simply backup your files, print them and store them in a safe place.
 
 ## Sample
 
@@ -72,7 +72,7 @@ docker run -v$(pwd):/target --entrypoint=/paperify/digitallify.sh alisinabh/pape
 
 ### Multiple files
 
-Use tarballs and gzip to store and compress you data.
+Use tarballs and gzip to store and compress your data.
 ```
 tar cvfz files.tgz file1.txt file2.txt
 ```
