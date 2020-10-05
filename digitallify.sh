@@ -11,13 +11,13 @@ elif [ "$2" = "" ]; then
   exit 1
 fi
 
-outputfile="$INPUT_DIR$1"
-dir="$OUTPUT_DIR$2"
+cur="$(pwd)/"
+outputfile="${OUTPUT_DIR:-$cur}$1"
+dir="${INPUT_DIR:-$cur}$2"
 
-files=$(ls $dir)
+files=$(ls "$dir")
 
-cur=$(pwd)
-cd $dir
+cd "$dir"
 
 for f in $files
 do
@@ -29,9 +29,10 @@ do
   zbarimg --raw -Sbinary --quiet $f | head -c 2953 > "$chunk-$noext.chunk"
 done
 
-cd $cur
-ls $dir/*.chunk | sort | xargs cat > $outputfile
-rm $dir/*.chunk
+echo $(ls | grep ".*\.chunk$" | sort)
+ls | grep ".*\.chunk$" | sort | xargs cat > $outputfile
+rm *.chunk
+cd "$cur"
 
 echo ""
 echo "File reconstructed as $outputfile"
