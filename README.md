@@ -25,6 +25,14 @@ zbarimg --version
 You can download and build zbar from [github.com/mchehab/zbar/](https://github.com/mchehab/zbar/).
 Note that zbar is **not** required for `paperify.sh` It is only required for `digitallify.sh` decoding.
 
+### Mac OS X
+
+To install the requirements you can use Homebrew.
+
+```
+brew install coreutils qrencode zbarimg
+```
+
 ## Installation
 
 These are just bash scripts. There is no need to install them.
@@ -51,6 +59,7 @@ Or you can use paperify's Docker image at alisinabh/paperify. More details below
 # scanned pages inside. Make sure the file namings are correct 
 ./digitalify.sh OUTPUT_FILE DIRECTORY
 ```
+
 
 ### Use with Docker
 
