@@ -38,7 +38,15 @@ echo $(pwd)
 sha=$(sha1sum "$file" | cut -f 1 -d ' ')
 date=$(date -u +%Y-%m-%dT%H:%M:%S+00:00)
 
-cat "$file" | split -d -b 2953 -a3 - "$dir/$prefix"
+SPLIT_BIN=split
+
+if [[ $OSTYPE == "darwin"* ]]; then
+	# Use gsplit in OS X as split does not support -d 
+	# Issue #11
+	SPLIT_BIN=gsplit
+fi
+
+eval "cat \"$file\" | $SPLIT_BIN -d -b 2953 -a3 - \"$dir/$prefix\""
 
 cd "$dir"
 
