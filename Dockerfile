@@ -16,12 +16,11 @@ RUN apt-get update && apt-get install \
     wget && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-
-RUN wget -q https://linuxtv.org/downloads/zbar/binaries/zbar-0.23.91-ubuntu-20.04.tar.gz
-
-RUN tar -xvf zbar-0.23.91-ubuntu-20.04.tar.gz && \
+RUN wget -q https://linuxtv.org/downloads/zbar/binaries/zbar-0.23.91-ubuntu-20.04.tar.gz && \
+    tar -xvf zbar-0.23.91-ubuntu-20.04.tar.gz && \
     rm zbar-0.23.91-ubuntu-20.04.tar.gz && \
-    dpkg -i libzbar0_0.23.91_amd64.deb libzbar-dev_0.23.91_amd64.deb python3-zbar_0.23.91_amd64.deb zbar-tools_0.23.91_amd64.deb
+    dpkg -i libzbar0_0.23.91_amd64.deb libzbar-dev_0.23.91_amd64.deb python3-zbar_0.23.91_amd64.deb zbar-tools_0.23.91_amd64.deb && \
+    rm -rf *.deb
 
 RUN mkdir /paperify
 COPY . /paperify
