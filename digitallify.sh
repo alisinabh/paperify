@@ -26,7 +26,7 @@ do
   noext=${f%.*}
   chunk=$(echo $noext |rev | cut -f 1 -d '-' | rev)
 
-  zbarimg --raw -Sbinary --quiet $f | head -c 2953 > "$chunk-$noext.chunk"
+  zbarimg --nodbus --raw -Sbinary --quiet $f | head -c 2953 > "$chunk-$noext.chunk"
 done
 
 echo $(ls | grep ".*\.chunk$" | sort)
