@@ -16,9 +16,8 @@ jobs:
       FONT: Roboto-Regular
       IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
     steps:
-      - uses: actions/checkout@v2
       - run: pacman --noconfirm -Sy qrencode zbar imagemagick git ttf-roboto fontconfig diffutils
-      - checkout
+      - uses: actions/checkout@v2
       - run: echo "Running encode and decode tests for paperify"
       - run: |
           echo "Generating testfine.bin"
