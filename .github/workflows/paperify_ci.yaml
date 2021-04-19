@@ -1,0 +1,36 @@
+name: Paperify CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Test paperify
+    runs-on: archlinux
+    env:
+      FONT: Roboto-Regular
+      IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
+    steps:
+      - uses: actions/checkout@v2
+      - run: pacman --noconfirm -Sy qrencode zbar imagemagick git ttf-roboto fontconfig diffutils
+      - checkout
+      - run: echo "Running encode and decode tests for paperify"
+      - run: |
+          echo "Generating testfine.bin"
+          dd if=/dev/urandom of=testfile.bin bs=1 count=10240
+          sha1sum testfile.bin
+          echo "Test file generated! running paperify.sh"
+      - run: fc-cache --force
+      - run: ./paperify.sh testfile.bin
+      - run: ./digitallify.sh testfile.regen.bin testfile.bin-qr
+      - run: diff testfile.bin testfile.regen.bin
+      - run: echo "Tests were successful. diff exit code $?"
+      - run: |
+          tar cfz paperify.tgz README.md paperify.sh digitallify.sh
+          ./paperify.sh -c "$IMG_HELP_MESSAGE" paperify.tgz
+          mv paperify.tgz-qr/paperify.tgz-000.png paperify.tgz.png
