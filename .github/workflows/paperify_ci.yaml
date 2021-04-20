@@ -13,11 +13,10 @@ jobs:
     name: Test paperify
     runs-on: ubuntu-latest
     env:
-      FONT: Roboto-Regular
       IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
     steps:
       - name: Install packages
-        run: sudo apt-get install qrencode zbar-tools imagemagick fonts-roboto
+        run: sudo apt-get install qrencode zbar-tools imagemagick
       - uses: actions/checkout@v2
       - name: Generate test files
         run: |
@@ -25,7 +24,6 @@ jobs:
           dd if=/dev/urandom of=testfile.bin bs=1 count=10240
           sha1sum testfile.bin
           echo "Test file generated! running paperify.sh"
-      - run: fc-cache --force
       - name: Paperify
         run: ./paperify.sh testfile.bin
       - name: Digitallify
