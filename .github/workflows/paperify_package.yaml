@@ -23,6 +23,16 @@ jobs:
           mv paperify.tgz-qr/paperify.tgz-000.png paperify.tgz.png
       - name: Ensure paperify is in a single file
         run: if [[ $(ls -A paperify.tgz-qr) ]]; then exit 1; fi
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: true
       - name: Upload paprify package
         uses: actions/upload-release-asset@v1
         env:
