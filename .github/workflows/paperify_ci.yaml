@@ -17,7 +17,7 @@ jobs:
       IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
     steps:
       - name: Install packages
-        run: sudo apt-get install qrencode zbar imagemagick
+        run: sudo apt-get install qrencode zbar-tools imagemagick
       - uses: actions/checkout@v2
       - name: Generate test files
         run: |
