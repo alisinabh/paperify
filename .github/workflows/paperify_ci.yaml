@@ -38,9 +38,3 @@ jobs:
         run: ./digitallify.sh testfile.regen.bin testfile.bin-qr
       - name: Check if both digitallified is same as original
         run: diff testfile.bin testfile.regen.bin
-      - run: echo "Tests were successful. diff exit code $?"
-      - name: Package paperify using paperify
-        run: |
-          tar cfz paperify.tgz README.md paperify.sh digitallify.sh
-          ./paperify.sh -c "$IMG_HELP_MESSAGE" paperify.tgz
-          mv paperify.tgz-qr/paperify.tgz-000.png paperify.tgz.png
