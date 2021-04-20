@@ -4,9 +4,11 @@
 
 Use QR codes to backup your data on papers. Simply backup your files, print them and store them in a safe place.
 
-## Sample
+## Printable version of paperify
 
-![Paperify](paperify.png)
+![Paperify](https://github.com/alisinabh/paperify/releases/download/readme_resources/paperify.png)
+
+You can print the image above and include them in your backups so you would have a copy of paperify with them. :)
 
 ## Requirements
 
