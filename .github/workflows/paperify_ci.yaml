@@ -17,7 +17,7 @@ jobs:
       IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
     steps:
       - name: Install packages
-        run: sudo apt-get install qrencode imagemagick fonts-roboto
+        run: sudo apt-get install qrencode imagemagick fonts-roboto libv4l-0
       - name: Install zbar
         run: |
           wget -q https://linuxtv.org/downloads/zbar/binaries/zbar-0.23.91-ubuntu-20.04.tar.gz &&
