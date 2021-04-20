@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/alisinabh/paperify.svg?style=svg)](https://circleci.com/gh/alisinabh/paperify)
 
+![Main CI](https://github.com/alisinabh/paperify/actions/workflows/paperify_ci.yaml/badge.svg)
+
 Use QR codes to backup your data on papers. Simply backup your files, print them and store them in a safe place.
 
 ## Sample
