@@ -1,0 +1,40 @@
+name: Paperify CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Test paperify
+    runs-on: ubuntu-latest
+    env:
+      FONT: Roboto
+      IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
+    steps:
+      - name: Install packages
+        run: sudo apt-get install qrencode imagemagick fonts-roboto libv4l-0 libmagick++-dev
+      - name: Install zbar
+        run: |
+          wget -q https://linuxtv.org/downloads/zbar/binaries/zbar-0.23.91-ubuntu-20.04.tar.gz &&
+          tar -xvf zbar-0.23.91-ubuntu-20.04.tar.gz &&
+          rm zbar-0.23.91-ubuntu-20.04.tar.gz &&
+          sudo dpkg -i libzbar0_0.23.91_amd64.deb libzbar-dev_0.23.91_amd64.deb python3-zbar_0.23.91_amd64.deb zbar-tools_0.23.91_amd64.deb &&
+          rm -rf *.deb
+      - uses: actions/checkout@v2
+      - name: Generate test files
+        run: |
+          echo "Generating testfine.bin"
+          dd if=/dev/urandom of=testfile.bin bs=1 count=10240
+          sha1sum testfile.bin
+          echo "Test file generated! running paperify.sh"
+      - name: Paperify
+        run: ./paperify.sh testfile.bin
+      - name: Digitallify
+        run: ./digitallify.sh testfile.regen.bin testfile.bin-qr
+      - name: Check if both digitallified is same as original
+        run: diff testfile.bin testfile.regen.bin

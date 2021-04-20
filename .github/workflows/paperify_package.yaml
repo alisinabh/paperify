@@ -1,0 +1,34 @@
+name: Paperify Package
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  test:
+    name: Make paperify printable asset
+    runs-on: ubuntu-latest
+    env:
+      FONT: Roboto
+      IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
+    steps:
+      - name: Install packages
+        run: sudo apt-get install qrencode imagemagick fonts-roboto
+      - uses: actions/checkout@v2
+      - name: Package paperify using paperify
+        run: |
+          tar cfz paperify.tgz README.md paperify.sh digitallify.sh
+          ./paperify.sh -c "$IMG_HELP_MESSAGE" paperify.tgz
+          mv paperify.tgz-qr/paperify.tgz-000.png paperify.tgz.png
+      - name: Ensure paperify is in a single file
+        run: if [[ $(ls -A paperify.tgz-qr) ]]; then exit 1; fi
+      - name: Upload paprify package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./paprify.tgz.png
+          asset_name: paperify.png
+          asset_content_type: image/png
