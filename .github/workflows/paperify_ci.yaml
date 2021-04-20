@@ -11,25 +11,30 @@ on:
 jobs:
   test:
     name: Test paperify
-    runs-on: archlinux
+    runs-on: ubuntu-latest
     env:
       FONT: Roboto-Regular
       IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
     steps:
-      - run: pacman --noconfirm -Sy qrencode zbar imagemagick git ttf-roboto fontconfig diffutils
+      - name: Install packages
+        run: sudo apt-get install qrencode zbar imagemagick
       - uses: actions/checkout@v2
-      - run: echo "Running encode and decode tests for paperify"
-      - run: |
+      - name: Generate test files
+        run: |
           echo "Generating testfine.bin"
           dd if=/dev/urandom of=testfile.bin bs=1 count=10240
           sha1sum testfile.bin
           echo "Test file generated! running paperify.sh"
       - run: fc-cache --force
-      - run: ./paperify.sh testfile.bin
-      - run: ./digitallify.sh testfile.regen.bin testfile.bin-qr
-      - run: diff testfile.bin testfile.regen.bin
+      - name: Paperify
+        run: ./paperify.sh testfile.bin
+      - name: Digitallify
+        run: ./digitallify.sh testfile.regen.bin testfile.bin-qr
+      - name: Check if both digitallified is same as original
+        run: diff testfile.bin testfile.regen.bin
       - run: echo "Tests were successful. diff exit code $?"
-      - run: |
+      - name: Package paperify using paperify
+        run: |
           tar cfz paperify.tgz README.md paperify.sh digitallify.sh
           ./paperify.sh -c "$IMG_HELP_MESSAGE" paperify.tgz
           mv paperify.tgz-qr/paperify.tgz-000.png paperify.tgz.png
