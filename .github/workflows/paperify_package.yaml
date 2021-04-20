@@ -33,12 +33,12 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: true
-      - name: Upload paprify package
+      - name: Upload paperify package
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./paprify.tgz.png
+          asset_path: ./paperify.tgz.png
           asset_name: paperify.png
           asset_content_type: image/png
