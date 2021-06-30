@@ -32,7 +32,7 @@ Note that zbar is **not** required for `paperify.sh` It is only required for `di
 To install the requirements you can use Homebrew.
 
 ```
-brew install coreutils qrencode zbarimg
+brew install coreutils qrencode zbar
 ```
 
 ## Installation
