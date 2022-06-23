@@ -97,6 +97,6 @@ gpg --symmetric file.txt
 Then use `file.txt.gpg` in paperify. 
 
 ## License
-Peperify is licensed in GPL-3.0
+Paperify is licensed in GPL-3.0
 
-Read more in [LICESE](LICENSE)
+Read more in [LICENSE](LICENSE)
