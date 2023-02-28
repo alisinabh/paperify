@@ -7,8 +7,10 @@ if [packageman = APT ] then
   sudo apt install imagemagick
   sudo apt install libzbar-dev
   sudo apt install qrencode
+ else
+ sudo pacman -S imagemagick libzbar-dev qrencode
 fi
 
-if [packageman = PACMAN ] then
-  sudo pacman -S imagemagick libzbar-dev qrencode
-fi
+#if [packageman = PACMAN ] then
+  #sudo pacman -S imagemagick libzbar-dev qrencode
+#fi
