@@ -15,9 +15,9 @@ if [ "$packageman" = "apt" ]; then
 elif [ "$packageman" = "pacman" ]; then
   sudo pacman -S imagemagick libzbar-dev qrencode
 elif [ "$packageman" = "yum" ]; then
-  yum install -y imagemagick
-  yum install -y libzbar-dev
-  yum install -y qrencode
+  sudo yum install -y imagemagick
+  sudo yum install -y libzbar-dev
+  sudo yum install -y qrencode
 else
   echo "Invalid package manager selected."
 fi
