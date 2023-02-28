@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "What package manager do you use?"
-echo "Choose one of the following"
+echo "Choose one of the following:"
 echo "apt"
 echo "pacman"
 echo "yum"
