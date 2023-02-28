@@ -3,6 +3,7 @@
 echo "What package manager do you use?"
 echo "APT"
 echo "PACMAN"
+echo "YUM"
 
 read packageman
 
