@@ -1,9 +1,10 @@
 #!/bin/bash
 
 echo "What package manager do you use?"
-echo "APT"
-echo "PACMAN"
-echo "YUM"
+echo "Choose one of the following"
+echo "apt"
+echo "pacman"
+echo "yum"
 
 read packageman
 
