@@ -8,9 +8,9 @@ read packageman
 
 if [ "$packageman" = "APT" ]; then
   sudo apt update
-  sudo apt install imagemagick -y
-  sudo apt install libzbar-dev -y
-  sudo apt install qrencode -y
+  sudo apt install -y imagemagick
+  sudo apt install -y libzbar-dev
+  sudo apt install -y qrencode
 elif [ "$packageman" = "PACMAN" ]; then
   sudo pacman -S imagemagick libzbar-dev qrencode
 else
