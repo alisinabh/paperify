@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Make paperify printable asset
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       FONT: Roboto
       IMG_HELP_MESSAGE: "UNPACK: zbarimg --raw -Sbinary -1 FILENAME.jpg | head -c 2953 > paperify.tgz"
