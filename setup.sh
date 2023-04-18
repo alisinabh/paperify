@@ -1,24 +1,60 @@
 #!/bin/bash
 
-echo "What package manager do you use?"
-echo "Choose one of the following:"
-echo "apt"
-echo "pacman"
-echo "yum"
+detect_os() {
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "linux"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "macos"
+  else
+    echo "unknown"
+  fi
+}
 
-read packageman
+detect_package_manager() {
+  local os=$1
+  if [ "$os" = "linux" ]; then
+    if command -v apt &> /dev/null; then
+      echo "apt"
+    elif command -v pacman &> /dev/null; then
+      echo "pacman"
+    elif command -v yum &> /dev/null; then
+      echo "yum"
+    else
+      echo "unknown"
+    fi
+  elif [ "$os" = "macos" ]; then
+    if command -v brew &> /dev/null; then
+      echo "brew"
+    else
+      echo "unknown"
+    fi
+  else
+    echo "unknown"
+  fi
+}
+
+run_sudo_command() {
+  if command -v sudo &> /dev/null; then
+    sudo "$@"
+  else
+    "$@"
+  fi
+}
+
+os=$(detect_os)
+packageman=$(detect_package_manager "$os")
+
+echo "OS: $os Package Manager: $packageman"
 
 if [ "$packageman" = "apt" ]; then
-  sudo apt update
-  sudo apt install -y imagemagick
-  sudo apt install -y libzbar-dev
-  sudo apt install -y qrencode
+  run_sudo_command apt update
+  run_sudo_command apt install -y imagemagick libzbar-dev qrencode
 elif [ "$packageman" = "pacman" ]; then
-  sudo pacman -S imagemagick libzbar-dev qrencode
+  run_sudo_command pacman -Syu imagemagick zbar qrencode
 elif [ "$packageman" = "yum" ]; then
-  sudo yum install -y imagemagick
-  sudo yum install -y libzbar-dev
-  sudo yum install -y qrencode
+  run_sudo_command yum install -y imagemagick zbar-devel qrencode
+elif [ "$packageman" = "brew" ]; then
+  brew install imagemagick zbar qrencode
 else
-  echo "Invalid package manager selected."
+  echo "Unable to detect a supported package manager."
 fi
