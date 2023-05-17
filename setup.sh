@@ -48,7 +48,7 @@ echo "OS: $os Package Manager: $packageman"
 
 if [ "$packageman" = "apt" ]; then
   run_sudo_command apt update
-  run_sudo_command apt install -y imagemagick libzbar-dev qrencode
+  run_sudo_command apt install -y imagemagick libzbar-dev qrencode zbar-tools
 elif [ "$packageman" = "pacman" ]; then
   run_sudo_command pacman -Syu imagemagick zbar qrencode
 elif [ "$packageman" = "yum" ]; then
