@@ -30,7 +30,7 @@ do
 done
 
 echo $(ls | grep ".*\.chunk$" | sort)
-ls | grep ".*\.chunk$" | sort | xargs cat > $outputfile
+ls | grep ".*\.chunk$" | sort | xargs cat > "$outputfile"
 rm *.chunk
 cd "$cur"
 
@@ -38,4 +38,4 @@ echo ""
 echo "File reconstructed as $outputfile"
 echo "IMPORTANT: Please check the bellow sha1 with the sha1 of the file in your media."
 echo ""
-sha1sum $outputfile
+sha1sum "$outputfile"
